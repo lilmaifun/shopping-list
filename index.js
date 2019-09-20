@@ -1,26 +1,42 @@
 $(function(){
     let addedItems = [];
     
-    //once I click on the Add item button I want to be able to store values into my array and then display the items of the array on my html page
     $('#js-shopping-list-form').submit(event => {
       
       event.preventDefault();
-     //not sure how to store the value of the entered item into this variable
-      let item = $(event.currentTarget).find(
-        "shopping-list-entry").val();
+   
+      let item = $("shopping-list-entry").val();
+  
+      $('#shopping-list-entry').val('');
+  
+  
+      $('.shopping-list').append(
+        `<li>
+          <span class="shopping-item">${item}</span>
+          <div class="shopping-item-controls">
+            <button class="shopping-item-toggle">
+              <span class="button-label">check</span>
+            </button>
+            <button class="shopping-item-delete">
+              <span class="button-label">delete</span>
+            </button>
+          </div>
+        </li>`
+      )
       
-    })
+    });
   
   
-   //not sure how to strike only specific instances of the item
-    $('.shopping-item-toggle').click(event => {
-      $('span.shopping-item').toggleClass('shopping-item__checked');
-    })
+   //strikes thru checked items
+    $('.shopping-list').on('click', '.shopping-item-delete', function (event) {
+      $(this).closest('li').remove(); 
+      });
   
     //if I click the delete button, I want to remove the item
-    $('button.shopping-item-delete').click(event => {
-      this.remove();
+    $('.shopping-list').on('click', '.shopping-item-toggle', function(event) {
+      $(this).closest('li').find('.shopping-item').toggleClass('shopping-item__checked');
     })
   
   });
+  
   
